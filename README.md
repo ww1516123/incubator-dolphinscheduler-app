@@ -8,6 +8,6 @@ base of [incubator-dolphinscheduler-base](https://github.com/ww1516123/incubator
 run eg:
 
 ```shell
-docker run -d --name incubator-dolphinscheduler -p 8888:8888 incubator-dolphinscheduler-app:1.1.0.1
+docker run -d --name incubator-dolphinscheduler -p 8888:8888 ww1516123/incubator-dolphinscheduler
 ```
 
