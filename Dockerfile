@@ -1,4 +1,4 @@
-FROM ww1516123/incubator-dolphinscheduler-base
+FROM ww1516123/incubator-dolphinscheduler-base:latest
 
 MAINTAINER maple "ww1516123@126.com"
 
