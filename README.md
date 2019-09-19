@@ -20,7 +20,12 @@ docker run -d --name incubator-dolphinscheduler -p 8888:8888 ww1516123/incubator
 
 websiteUrl:http://[ip]:8888/
 
-## Manual configuration 
+Username: `admin`
+
+Passowrd:`escheduler123`
+
+## Manual configuration
+
 master.properties
 ```properties
 # master execute thread num
