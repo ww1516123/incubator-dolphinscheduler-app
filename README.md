@@ -150,6 +150,10 @@ org.quartz.dataSource.myDs.validationQuery = select 1
 **Eg:**
 
 ```shell
-docker run -d --name incubator-dolphinscheduler -v ./worker.properties://opt/escheduler/conf/worker.properties -v ./master.properties://opt/escheduler/conf/master.properties -p 8888:8888 ww1516123/incubator-dolphinscheduler
+docker run -d --name incubator-dolphinscheduler -v ./worker.properties:/opt/escheduler/conf/worker.properties -v ./master.properties:/opt/escheduler/conf/master.properties -p 8888:8888 ww1516123/incubator-dolphinscheduler
 ```
-
+**hdfs-setting:**
+If you use hdfs-related functions, you need to copy hdfs-site.xml and core-site.xml to the conf directory
+```shell
+docker run -d --name incubator-dolphinscheduler  -v ./core-site.xml:/opt/escheduler/conf/core-site.xml  -v ./hdfs-site.xml:/opt/escheduler/conf/hdfs-site.xml  -v ./worker.properties:/opt/escheduler/conf/worker.properties -v ./master.properties:/opt/escheduler/conf/master.properties -p 8888:8888 ww1516123/incubator-dolphinscheduler
+```
