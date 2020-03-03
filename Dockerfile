@@ -1,7 +1,6 @@
-FROM ww1516123/incubator-dolphinscheduler-base:latest
+FROM ww1516123/incubator-dolphinscheduler-base:1.2.1
 
 MAINTAINER maple "ww1516123@126.com"
-
 
 
 ADD ./conf/zookeeper/zoo.cfg /opt/zookeeper/conf
@@ -10,48 +9,32 @@ ADD ./conf/maven/settings.xml /opt/maven/conf
 
 # download
 RUN cd /opt && \
-    wget https://github.com/ww1516123/incubator-dolphinscheduler/archive/1.1.0.1.tar.gz && \
-    tar -zxvf 1.1.0.1.tar.gz && \
-    mv incubator-dolphinscheduler-1.1.0.1 incubator-dolphinscheduler_source && \
-    rm -rf ./1.1.0.1.tar.gz
+    wget https://github.com/ww1516123/incubator-dolphinscheduler/archive/1.2.1.tar.gz && \
+    tar -zxvf 1.2.1.tar.gz && \
+    mv incubator-dolphinscheduler-1.2.1 dolphinscheduler_source && \
+    rm -rf ./1.2.1.tar.gz
 
 # backend build
-RUN cd /opt/incubator-dolphinscheduler_source && \
-    mvn -U clean package assembly:assembly -Dmaven.test.skip=true
+RUN cd /opt/dolphinscheduler_source && \
+    mvn -U clean package -Prelease -Dmaven.test.skip=true
+#8,modify dolphinscheduler configuration file
+#backend configuration
+RUN tar -zxvf /opt/dolphinscheduler_source/dolphinscheduler-dist/target/apache-dolphinscheduler-incubating-1.2.1-dolphinscheduler-bin.tar.gz -C /opt && \
+    mv /opt/apache-dolphinscheduler-incubating-1.2.1-dolphinscheduler-bin /opt/dolphinscheduler && \
+    rm -rf /opt/dolphinscheduler/conf
 
-# fontend build
-RUN chmod -R 777 /opt/incubator-dolphinscheduler_source/escheduler-ui && \
-    cd /opt/incubator-dolphinscheduler_source/escheduler-ui && \
-    rm -rf /opt/incubator-dolphinscheduler_source/escheduler-ui/node_modules && \
-    npm install node-sass --unsafe-perm && \
-    npm install && \
-    npm run build
-
-# setting
-# backend setting
-RUN mkdir -p /opt/escheduler && \
-    tar -zxvf /opt/incubator-dolphinscheduler_source/target/escheduler-1.1.0.1.tar.gz -C /opt/escheduler && \
-    rm -rf /opt/escheduler/conf
-ADD ./conf/escheduler/conf /opt/escheduler/conf
+ADD ./conf/dolphinscheduler/conf /opt/dolphinscheduler/conf
 
 # nginx config
 ADD ./conf/nginx/default.conf /etc/nginx/conf.d
-
-
-# mysql config
-
-RUN sed -i -e "$ a [client]\n\n[mysql]\n\n[mysqld]"  /etc/mysql/my.cnf && \
-        sed -i -e "s/\(\[client\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
-        sed -i -e "s/\(\[mysql\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
-        sed -i -e "s/\(\[mysqld\]\)/\1\ninit_connect='SET NAMES utf8'\ncharacter-set-server = utf8\ncollation-server=utf8_general_ci\nbind-address = 0.0.0.0/g" /etc/mysql/my.cnf
 
 COPY ./startup.sh /root/startup.sh
 
 # chomod
 RUN chmod +x /root/startup.sh && \
-  chmod +x /opt/escheduler/script/create_escheduler.sh && \
+  chmod +x /opt/dolphinscheduler/script/create-dolphinscheduler.sh && \
   chmod +x /opt/zookeeper/bin/zkServer.sh && \
-  chmod +x /opt/escheduler/bin/escheduler-daemon.sh && \
+  chmod +x /opt/dolphinscheduler/bin/dolphinscheduler-daemon.sh && \
   rm -rf /bin/sh && \
   ln -s /bin/bash /bin/sh && \
   mkdir -p /tmp/xls
