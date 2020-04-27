@@ -273,6 +273,8 @@ yarn.resourcemanager.ha.rm.ids=192.168.xx.xx,192.168.xx.xx
 
 # If it is a single resourcemanager, you only need to configure one host name. If it is resourcemanager HA, the default configuration is fine
 yarn.application.status.address=http://ark1:8088/ws/v1/cluster/apps/%s
+# logger server rpc port
+loggerserver.rpc.port=50051
 
 ```
 
