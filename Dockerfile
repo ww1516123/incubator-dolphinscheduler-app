@@ -30,6 +30,8 @@ ADD ./conf/nginx/default.conf /etc/nginx/conf.d
 
 COPY ./startup.sh /root/startup.sh
 
+RUN chmod +x /root/startup.sh
+
 # chomod
 RUN chmod +x /root/startup.sh && \
   chmod +x /opt/dolphinscheduler/script/create-dolphinscheduler.sh && \

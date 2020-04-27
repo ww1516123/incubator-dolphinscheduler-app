@@ -275,12 +275,11 @@ yarn.resourcemanager.ha.rm.ids=192.168.xx.xx,192.168.xx.xx
 yarn.application.status.address=http://ark1:8088/ws/v1/cluster/apps/%s
 # logger server rpc port
 loggerserver.rpc.port=50051
-
 ```
 
 
 
-alert.properties 
+alert.properties
 
 ```properties
 #
@@ -405,4 +404,3 @@ If you use hdfs-related functions, you need to copy hdfs-site.xml and core-site.
 ```shell
 docker run -d --name incubator-dolphinscheduler  -v ./core-site.xml:/opt/dolphinscheduler/conf/core-site.xml  -v ./hdfs-site.xml:/opt/dolphinscheduler/conf/hdfs-site.xml  -v ./quartz.properties:/opt/dolphinscheduler/conf/quartz.properties -p 8888:8888 ww1516123/incubator-dolphinscheduler
 ```
-
